@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+    var ws = new WebSocket('ws:localhost:8181')
+
+    ws.onopen = function(){
+        console.log('Connection to server opened');
+    }
+
+    ws.onmessage = function(e){
+
+        var stocksData = JSON.parse(e.data)
+        console.log( stocksData )
+
+    }
+
+
+    function sendMessage() {
+        ws.send('Hello app');
+    }
+
+
+
+</script>
+</body>
+</html>

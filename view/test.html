@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据可视化</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/perfect-scrollbar.css" type="text/css">
+    <script src="js/lib/jquery/dist/jquery.min.js"></script>
+    <script src="js/lib/echarts/dist/echarts.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script src="js/lib/vue/dist/vue.js"></script>
+    <script src="js/lib/perfect-scrollbar/jquery.mousewheel.js"></script>
+    <script src="js/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+	<style type="text/css">
+		.anchorBL{display:none;}
+	</style>
+</head>
+<body>
+
+	<div id="map" style="width : 100%;height:100%">
+
+	</div>
+	<!--<div id="app">
+
+		<scroll-list-component></scroll-list-component>
+
+	</div>-->
+
+</div>
+
+<script>
+	
+</script>
+
+<script type="text/x-template" id="scroll-list-template">
+	<div class="scroll-list">
+		<div class="scroll-header">
+			<p class="row">
+				<span v-for="column in columns" v-bind:style="{flex:column.flex,width:column.width}"> {{ column.name }} </span>
+			</p>
+		</div>
+		<div class="scroll-body">
+			<ul class="scroll-content">
+				<li class="row" v-for="item in reversedMessage">
+					<span v-for="column in columns" v-bind:style="{flex:column.flex,width:column.width}">{{ item[ column.dataIndex ] }}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</script>
+<script src="js/app/test.js"></script>
+<!--<script src="js/app/index.js"></script>-->
+<!--<script src="js/app/map.js"></script>
+<script src="js/app/histogram.js"></script>-->
+
+</body>
+</html>

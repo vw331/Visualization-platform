@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据可视化</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/perfect-scrollbar.css" type="text/css">
+    <script src="js/lib/jquery/dist/jquery.min.js"></script>
+    <script src="js/lib/echarts/dist/echarts.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=PektXExw4dMOwmfGylORZoSIZ8MPKGRo"></script>
+    <!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>-->
+    <script src="js/lib/bmap.min.js"></script>
+    <script src="js/lib/vue/dist/vue.js"></script>
+    <script src="js/lib/perfect-scrollbar/jquery.mousewheel.js"></script>
+    <script src="js/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+</head>
+<body>
+
+<div class="map-warp" id="map">
+
+</div>
+
+<div class="container" id="app" @click="selectDisplay=false" v-bind:class="{ 'event' : eventOff }">
+    <div class="header">
+        <h2 class="title"><img src="images/title.png"></h2>
+        <div class="top-tool">
+            <div class="control"><i class="doing-icon rotate"></i><span class="doing">正在监控</span></div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="article">
+            <div class="select-warp">
+                <div class="select">
+                    <span class="content">{{ sourceText  }}</span>
+                    <span class="arrow" v-on:click.stop="selectDisplay=!selectDisplay"></span>
+                </div>
+                <div class="drop-box" v-show="selectDisplay">
+                    <ul class="drop-list">
+                        <li is="drop-item-component"
+                            v-for="(item,index) in allProvince"
+                            v-bind:text="item"></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="side">
+
+            <div class="part-statistical">
+                <div class="box-statistical-item">
+                    <div class="box-statistical-title"><i class="icon_type icon_flight">航班旅客</i></div>
+                    <div class="box-statistical-content">{{ total.no1 }}</div>
+                </div>
+                <div class="box-statistical-item">
+                    <div class="box-statistical-title"><i class="icon_type icon_flight2">火车旅客</i></div>
+                    <div class="box-statistical-content">{{ total.no2 }}</div>
+                </div>
+                <div class="box-statistical-item">
+                    <div class="box-statistical-title"><i class="icon_type icon_train">住宿旅客</i></div>
+                    <div class="box-statistical-content">{{ total.no3 }}</div>
+                </div>
+                <div class="box-statistical-item">
+                    <div class="box-statistical-title"><i class="icon_type icon_train2">公路旅客</i></div>
+                    <div class="box-statistical-content">{{ total.no4 }}</div>
+                </div>
+                <div class="box-statistical-item">
+                    <div class="box-statistical-title"><i class="icon_type icon_come">公路旅客</i></div>
+                    <div class="box-statistical-content">{{ total.no5 }}</div>
+                </div>
+                <div class="box-statistical-item">
+                    <div class="box-statistical-title"><i class="icon_type icon_back">公路旅客</i></div>
+                    <div class="box-statistical-content">{{ total.no6 }}</div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="bottom" id="list-warp">
+
+        <scroll-list-component></scroll-list-component>
+
+        <div class="part-table">
+            <div id="histogram" style="height:100%;width:100%">
+
+            </div>
+        </div>
+    </div>
+
+    <modal v-if="showModal" @close="showModal = false" v-cloak>
+
+        <h3 slot="header">详细信息</h3>
+
+        <table slot="body" class="table table-bordered">
+            <tr>
+                <td>姓名</td>
+                <td>张三</td>
+                <td>年龄</td>
+                <td>18</td>
+                <td>性别</td>
+                <td>女</td>
+            </tr>
+            <tr>
+                <td>手机号</td>
+                <td>123789854</td>
+                <td>身份证号</td>
+                <td>2487954987894897</td>
+                <td>QQ号</td>
+                <td>8797498789</td>
+            </tr>
+            <tr>
+                <td>学历</td>
+                <td>高中</td>
+                <td>籍贯</td>
+                <td>浙江杭州</td>
+                <td>血型</td>
+                <td>NB</td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td>张三</td>
+                <td>年龄</td>
+                <td>18</td>
+                <td>性别</td>
+                <td>女</td>
+            </tr>
+            <tr>
+                <td>手机号</td>
+                <td>123789854</td>
+                <td>身份证号</td>
+                <td>2487954987894897</td>
+                <td>QQ号</td>
+                <td>8797498789</td>
+            </tr>
+            <tr>
+                <td>学历</td>
+                <td>高中</td>
+                <td>籍贯</td>
+                <td>浙江杭州</td>
+                <td>血型</td>
+                <td>NB</td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td>张三</td>
+                <td>年龄</td>
+                <td>18</td>
+                <td>性别</td>
+                <td>女</td>
+            </tr>
+            <tr>
+                <td>手机号</td>
+                <td>123789854</td>
+                <td>身份证号</td>
+                <td>2487954987894897</td>
+                <td>QQ号</td>
+                <td>8797498789</td>
+            </tr>
+            <tr>
+                <td>学历</td>
+                <td>高中</td>
+                <td>籍贯</td>
+                <td>浙江杭州</td>
+                <td>血型</td>
+                <td>NB</td>
+            </tr>
+            <tr>
+                <td>手机号</td>
+                <td>123789854</td>
+                <td>身份证号</td>
+                <td>2487954987894897</td>
+                <td>住址</td>
+                <td>浙江省杭州市西湖区文三路东部软件园</td>
+            </tr>
+        </table>
+
+</div>
+
+
+<script type="text/x-template" id="list-template">
+    <div class="box">
+        <h3 class="box-title">{{ title }}</h3>
+        <ul class="list">
+
+            <li class="row" v-for="list in lists" v-on:click="dialog(list)">
+                <p><i v-bind:class="{ 'hot' : list.index <= 3 }">{{ list.index }}</i>{{ list.name }}</p>
+                <span>{{ list.value }}</span>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script type="text/x-template" id="scroll-list-template">
+    <div class="scroll-list">
+        <div class="item-title">实时动态</div>
+        <div class="scroll-header">
+            <p class="row">
+                <span v-for="column in columns" v-bind:style="{flex:column.flex,width:column.width}"> {{ column.name }} </span>
+            </p>
+        </div>
+        <div class="scroll-body">
+            <ul class="scroll-content">
+                <li class="row" v-for="item in reversedMessage" v-on:click="dialog(item)">
+                    <span v-for="column in columns" v-bind:style="{flex:column.flex,width:column.width}">{{ item[ column.dataIndex ] }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+
+                    <div class="modal-header">
+                       <!-- <slot name="header">
+                            default header
+                        </slot>-->
+                        <a class="modal-default-button" @click="$emit('close')">
+
+                        </a>
+                    </div>
+
+                    <div class="modal-body">
+                        <slot name="body">
+                            default body
+                        </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            <!--default footer-->
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>
+
+<script type="text/x-template" id="select-drop-template">
+
+    <div class="select-warp">
+        <div class="select">
+            <span class="content">全部来源</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="drop-box">
+            <ul class="drop-list">
+                <li v-if="item in allItem"><span>{{ item }}</span></li>
+            </ul>
+        </div>
+    </div>
+
+</script>
+
+<script src="js/app/index.js"></script>
+<script src="js/app/map.js"></script>
+<script src="js/app/histogram.js"></script>
+</body>
+</html>
